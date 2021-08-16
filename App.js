@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading'; // expo install expo-app-loading
+import { useFonts } from 'expo-font';
 
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
@@ -10,7 +13,12 @@ export default function App() {
 	const [userNumber, setUserNumber] = useState();
 	const [guessRounds, setGuessRounds] = useState(0);
 
-	const newGameHandler = () => {
+	let [fontsLoaded] = useFonts({
+		'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+		'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+	});
+
+	const configureNewGameHandler = () => {
 		setGuessRounds(0);
 		setUserNumber(null);
 	};
@@ -34,17 +42,21 @@ export default function App() {
 			<GameOverScreen
 				roundsNumber={guessRounds}
 				userNumber={userNumber}
-				onRestart={newGameHandler}
+				onRestart={configureNewGameHandler}
 			/>
 		);
 	}
 
-	return (
-		<View style={styles.screen}>
-			<Header title='Guess a Number' />
-			{content}
-		</View>
-	);
+	if (!fontsLoaded) {
+		return <AppLoading />;
+	} else {
+		return (
+			<View style={styles.screen}>
+				<Header title='Guess a Number' />
+				{content}
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
