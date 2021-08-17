@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	Button,
-	Image,
-	Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 
 import MainButton from '../components/MainButton';
 
@@ -58,6 +51,7 @@ const styles = StyleSheet.create({
 	},
 	resultContainer: {
 		marginVertical: Dimensions.get('window').height / 60,
+		alignItems: 'center',
 	},
 	text: {
 		marginBottom: 5,
